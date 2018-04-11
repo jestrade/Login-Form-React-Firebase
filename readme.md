@@ -22,5 +22,10 @@ Login form that redirects the user to a protected page. The protected page shows
 * Javascript (React)
 * Firebase (Realtime DB, Authentication, Storage)
 
+## Run the project
+To execute the application you must run the following commands:
+    npm install
+    npm run build
+    npm start
 
 ### jestrade
