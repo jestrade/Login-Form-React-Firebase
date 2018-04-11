@@ -1,0 +1,12 @@
+.reset{
+    margin:0;
+    padding:0;
+}
+@import 'Components/nav';
+@import 'Components/header';
+@import 'Components/footer';
+@import 'Components/main';
+@import 'Components/forms';
+body{
+    @extend .reset;
+}
