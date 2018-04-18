@@ -1,6 +1,10 @@
 
 import React from 'react';
 
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import {logIn} from './../api.jsx';
 
 class Login extends React.Component {	
@@ -41,30 +45,41 @@ class Login extends React.Component {
     
 	render() {
 		return (
-		<section>
-		<h2>Login</h2>
+		 <Card>
+		 <CardHeader
+      title="Welcome"
+    />
 		{
 			<p>{this.state.message}</p>
 		}	
-		<form onSubmit={this.handleSubmit}>
-			<p><label>Email</label>
-			<input 
+		<CardTitle title="Please fill the fields"  />
+		<CardText>
+		<form>
+		
+			<TextField 
+				floatingLabelText="Email"
+				hintText="Email"
 				name="email" 
 				value={this.state.email} 
 				onChange={this.handleChange} 
-				type="email" /></p>
+				type="email" /><br />
 				
-			<p><label>Password</label>
-			<input 
+			<TextField 
+				floatingLabelText="Password"
+				hintText="Password"
 				name="password" 
 				value={this.state.password} 
 				onChange={this.handleChange} 
-				type="password" /></p>
+				type="password" /><br />
 			
-		
-			<p><button>Entrar</button></p>
+		<RaisedButton 
+			label="Sign in"  
+			primary={true}
+			onClick={this.handleSubmit}
+		/>
 		</form>
-		</section>);
+		</CardText>
+		 </Card>);
 	}
 }
 

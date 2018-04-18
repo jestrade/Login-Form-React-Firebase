@@ -1,6 +1,8 @@
 
 import React from 'react';
 
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 import Messages from './messages.jsx';
 import Files from './files.jsx';
 
@@ -10,11 +12,10 @@ class Protected extends React.Component {
 
 	render() {
 		return (
-		<section>
-		<p>Protected</p>
+		<Card>
 		<Route path="/protected/messages" component={Messages} />
 		<Route path="/protected/files" component={Files} />
-		</section>);
+		</Card>);
 	}
 }
 

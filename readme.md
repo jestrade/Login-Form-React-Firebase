@@ -1,6 +1,6 @@
 
 # Login Form
-> This repositorie contains a single web front end application deployable in Firebase, using Firebase tools.
+> This repository contains a single web front end application deployable in Firebase, using Firebase tools.
 
 ## Usage
 Login form that redirects the user to a protected page. The protected page shows 2 links to Message List and Upload File

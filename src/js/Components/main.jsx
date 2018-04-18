@@ -1,5 +1,6 @@
 
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Header from './Layout/header.jsx';
 
 import Protected from './protected.jsx';
@@ -43,7 +44,7 @@ class Main extends React.Component {
     
 	render() {
 		return (
-		<main>
+		<MuiThemeProvider>
 		<Router>
 			<div>
 				<Header isAuthenticated={this.state.isAuthenticated} logOut={this.logOut} />
@@ -56,7 +57,7 @@ class Main extends React.Component {
 				<Footer />
 			</div>
 		</Router>
-		</main>);
+		</MuiThemeProvider>);
 	}
 }
 

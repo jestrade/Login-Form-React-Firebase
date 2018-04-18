@@ -1,6 +1,20 @@
 
-import {loadData,sendData,deleteData} from './../api.jsx';
 import React from 'react';
+
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
+
+import {loadData,sendData,deleteData} from './../api.jsx';
 
 class Messages extends React.Component {	
 	constructor(){
@@ -68,56 +82,81 @@ class Messages extends React.Component {
 	}
 	render() {
 		return (
-		<section>
-		<h2>Enviar mensaje</h2>
+			<section>
+				 <CardHeader
+				      title="Messages"
+				    />
+		    
+			    <CardTitle title="Please fill the fields"  />
+					<CardText>
 		
-		<form onSubmit={this.handleSubmit}>
-			<p><label>Nombre</label>
-			<input 
+		<form>
+		
+		<TextField 
+				floatingLabelText="Name"
+				hintText="Name"
 				name="nombre" 
 				value={this.state.nombre} 
 				onChange={this.handleChange} 
-				type="text" /></p>
+				type="text" /><br />
 				
-			<p><label>Correo</label>
-			<input 
+			<TextField 
+				floatingLabelText="Email"
+				hintText="Email"
 				name="correo" 
 				value={this.state.correo} 
 				onChange={this.handleChange} 
-				type="email" /></p>
+				type="email" /><br />
 			
-			<p><label>Mensaje</label>
-			<textarea name="mensaje" 
+		<TextField 
+				floatingLabelText="Mensaje"
+				hintText="Mensaje"
+				rows={2}
+    			rowsMax={4}
+				name="mensaje" 
 				value={this.state.mensaje} 
-				onChange={this.handleChange}></textarea></p>
-			<p><button>Enviar</button></p>
+				onChange={this.handleChange} /><br />
+		
+		<RaisedButton 
+			label="Send"  
+			primary={true}
+			onClick={this.handleSubmit}
+		/>
+		
 		</form>
-		<h2>Mensajes enviados</h2>
-		<table>
-			<thead>
-				<tr>
-				<th>Nombre</th>
-				<th>Correo</th>
-				<th>Mensaje</th>
-				<th>Opciones</th>
-				</tr>
-			</thead>
-			<tbody>
+		</CardText>
+		
+		
+	
+		<Table>
+			<TableHeader>
+				<TableRow>
+				<TableHeaderColumn>Nombre</TableHeaderColumn>
+				<TableHeaderColumn>Correo</TableHeaderColumn>
+				<TableHeaderColumn>Mensaje</TableHeaderColumn>
+				<TableHeaderColumn>Opciones</TableHeaderColumn>
+				</TableRow>
+			</TableHeader>
+			<TableBody>
 				{
 					this.state.mensajes.map((dato)=>{
 					 return (
-						<tr key={dato.id}>
-							<td>{dato.nombre}</td>
-							<td>{dato.correo}</td>
-							<td>{dato.mensaje}</td>
-							<td><button onClick={()=>{this.removeData(dato.id)}}>Eliminar</button></td>
-						</tr>
+						<TableRow key={dato.id}>
+							<TableRowColumn>{dato.nombre}</TableRowColumn>
+							<TableRowColumn>{dato.correo}</TableRowColumn>
+							<TableRowColumn>{dato.mensaje}</TableRowColumn>
+							<TableRowColumn>
+							<RaisedButton 
+								label="Delete"  
+								primary={true}
+								onClick={()=>{this.removeData(dato.id)}} /></TableRowColumn>
+						</TableRow>
 						)
 					})
 					
 				}
-			</tbody>
-		</table>
+			</TableBody>
+		</Table>
 		</section>);
 	}
 }

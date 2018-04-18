@@ -7,6 +7,12 @@
 @import 'Components/footer';
 @import 'Components/main';
 @import 'Components/forms';
-body{
+html {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
     @extend .reset;
+  font-size: 13px;
+  line-height: 20px;
 }

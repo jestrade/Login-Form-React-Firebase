@@ -1,6 +1,10 @@
 
 
 import React from 'react';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import {uploadFile} from './../api.jsx';
 
 class Files extends React.Component {	
@@ -48,24 +52,31 @@ class Files extends React.Component {
 	render() {
 		return (
 		<section>
-		<h2>Cargar archivo</h2>
 		
-		<form onSubmit={this.handleSubmit}>
-			<p><label>Archivo</label>
-			<input 
+		<CardTitle title="Upload file"  />
+		<CardText>
+		
+		<form>
+			<TextField 
 				name="file" 
 				onChange={this.handleChange} 
 				type="file"
 				accept="image/*"
-				/></p>
+				/><br />
 				{
 				this.state.imagen !=='' ?
 				<p><img src={this.state.imagen} /></p>
 				:
 				<span></span>
 				}
-			<p><button>Enviar</button></p>
+			<br />
+			<RaisedButton 
+			label="Upload"  
+			primary={true}
+			onClick={this.handleSubmit}
+			/>
 		</form>
+		</CardText>
 		</section>);
 	}
 }

@@ -3,6 +3,9 @@ import React from 'react';
 
 import {Link} from 'react-router-dom';
 
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
+
 import {logOut} from './../../api.jsx';
 
 class Header extends React.Component {	
@@ -18,18 +21,20 @@ class Header extends React.Component {
 	render() {
 		return (
 		<header>
-			<h1>Mi sitio</h1>
+		
 			{
 				this.props.isAuthenticated ?
-				<div>
-					<ul>
-					<li><Link to="/protected/messages">Messages</Link></li>
-					<li><Link to="/protected/files">Files</Link></li>
-					</ul>
-					<p><button onClick={()=>{this.signOut()}}>LogOut</button></p>
-				</div>
+				<AppBar 
+					title="Mi sitio"
+					iconElementRight={<div>
+					<Link to="/protected/messages">Messages</Link>
+					<Link to="/protected/files">Files</Link>
+					<FlatButton onClick={()=>{this.signOut()}} label="LogOut" />
+					</div>		
+					} 
+				/>
 				:
-				<span></span>
+				<AppBar title="Mi sitio" />
 			}
 		</header>);
 	}
