@@ -1,10 +1,11 @@
 import {loadData,sendData,deleteData} from './../api.jsx';
 
 /*actions*/
+const collection = 'messages';
 
 export function createMessage(message) {
 	return (dispatch) => {
-		sendData(message)
+		sendData(collection,message)
 		.then(()=>{
 			dispatch(createMessageSuccess(message))
     	})
@@ -13,7 +14,7 @@ export function createMessage(message) {
 
 export function deleteMessage(messageId) {
 	return (dispatch) => {
-		deleteData(messageId)
+		deleteData(collection,messageId)
 		dispatch(deleteMessageSuccess(messageId))
 	}
 }
@@ -21,7 +22,7 @@ export function deleteMessage(messageId) {
 export function loadMessages() {
     return (dispatch) => {
 		
-		loadData()
+		loadData(collection)
 		.on('value',(snapshot)=>{
 			let items = snapshot.val();
 			let tmp=[];

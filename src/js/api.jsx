@@ -11,14 +11,14 @@ import firebase from 'firebase';
 
   firebase.initializeApp(config);
   
-  export function loadData(){
-      return firebase.database().ref('/messages/');
+  export function loadData(collection){
+      return firebase.database().ref(collection);
   }
-  export function sendData(mensaje){
-      return firebase.database().ref('/messages/').push(mensaje);
+  export function sendData(collection,object){
+      return firebase.database().ref(collection).push(object);
   }
-  export function deleteData(mensajeId){
-      firebase.database().ref('/messages/').child(mensajeId).remove();
+  export function deleteData(collection,objectId){
+      firebase.database().ref(collection).child(objectId).remove();
   }
   export function logOut(){
     return firebase.auth().signOut()
