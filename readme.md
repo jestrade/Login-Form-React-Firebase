@@ -18,9 +18,9 @@ Login form that redirects the user to a protected page. The protected page shows
 ## Technologies
 * Webpack
 * HTML
-* CSS(SASS)
-* Javascript (React)
-* Firebase (Realtime DB, Authentication, Storage)
+* CSS(SASS) + Material-UI
+* Javascript (React + Redux)
+* Firebase (Realtime DB, Authentication, Storage, Functions)
 
 ## Run the project
 To execute the application you must run the following commands:
@@ -28,4 +28,23 @@ To execute the application you must run the following commands:
     npm run build
     npm start
 
-### jestrade
+
+## Firebase 
+To start using Firebase integration
+    npm install -g firebase-tools
+    firebase login --no-localhost
+    firebase init
+
+### Console integration
+To deploy the application in hosting 
+    firebase deploy
+
+To deploy functions
+    firebase init functions
+    cd functions/
+    add service-account-credentials.json to functions folder. This file is generated in Firebase Console
+    npm install
+    firebase deploy --only-functions
+
+
+### @jestrade
