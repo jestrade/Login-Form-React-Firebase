@@ -1,9 +1,12 @@
 
 import React from 'react';
 
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {CardHeader, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+
+import { connect } from 'react-redux';
+import { loadMessages, deleteMessage, createMessage } from './../actions/messages.jsx';
 
 import {
   Table,
@@ -14,16 +17,14 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 
-import {loadData,sendData,deleteData} from './../api.jsx';
-
 class Messages extends React.Component {	
 	constructor(){
 		super();
 		this.state = {
-			nombre:'',
-			correo:'',
-			mensaje:'',
-			mensajes:[]
+			name:'',
+			email:'',
+			message:'',
+			messages:[]
 		}
 		this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,75 +37,61 @@ class Messages extends React.Component {
     }
     
     handleSubmit(e){
-    
     	e.preventDefault();
-    	let mensaje={
-    		nombre:this.state.nombre,
-    		correo:this.state.correo,
-    		mensaje:this.state.mensaje
+    	let message={
+    		name:this.state.name,
+    		email:this.state.email,
+    		message:this.state.message
     	}
-    	sendData(mensaje)
-    	.then(()=>{
-    		this.setState({
-    			nombre:'',
-    			correo:'',
-    			mensaje:''
-    			
-    		})
-    		
-    		
+		this.props.sendData(message);
+    	this.setState({
+			name:'',
+			email:'',
+			message:'',	
     	})
     	 		
     }
     
-	removeData(mensajeId){
-		deleteData(mensajeId)
+	removeData(messageId){
+		this.props.deleteData(messageId);
 	}
 	
 	componentDidMount(){
-		loadData()
-		.on('value',(snapshot)=>{
-			let datos = snapshot.val();
-			let tmp=[];
-			for (let dato in datos){
-				tmp.push({
-					id:dato,
-					nombre:datos[dato].nombre,
-					correo:datos[dato].correo,
-					mensaje:datos[dato].mensaje
-				});
-			}
-			this.setState({
-				mensajes:tmp
-			});
-			
-		});
+		this.props.loadData();
 	}
+	
 	render() {
 		return (
 			<section>
+			
 				 <CardHeader
 				      title="Messages"
 				    />
+		
+		
+		 
 		    
-			    <CardTitle title="Please fill the fields"  />
+			    <CardTitle title="Send a new message"  />
 					<CardText>
+		
+		
+		
 		
 		<form>
 		
 		<TextField 
 				floatingLabelText="Name"
 				hintText="Name"
-				name="nombre" 
-				value={this.state.nombre} 
+				name="name" 
+				value={this.state.name} 
 				onChange={this.handleChange} 
 				type="text" /><br />
 				
 			<TextField 
 				floatingLabelText="Email"
 				hintText="Email"
-				name="correo" 
-				value={this.state.correo} 
+				name="email" 
+				value={this.state.email} 
 				onChange={this.handleChange} 
 				type="email" /><br />
 			
@@ -113,8 +100,8 @@ class Messages extends React.Component {
 				hintText="Mensaje"
 				rows={2}
     			rowsMax={4}
-				name="mensaje" 
-				value={this.state.mensaje} 
+				name="message" 
+				value={this.state.message} 
 				onChange={this.handleChange} /><br />
 		
 		<RaisedButton 
@@ -129,7 +116,11 @@ class Messages extends React.Component {
 		
 	
 		<Table>
-			<TableHeader>
+			<TableHeader
+				displaySelectAll={false}
+	            adjustForCheckbox={false}
+	            enableSelectAll={false}
+			>
 				<TableRow>
 				<TableHeaderColumn>Nombre</TableHeaderColumn>
 				<TableHeaderColumn>Correo</TableHeaderColumn>
@@ -137,19 +128,21 @@ class Messages extends React.Component {
 				<TableHeaderColumn>Opciones</TableHeaderColumn>
 				</TableRow>
 			</TableHeader>
-			<TableBody>
+			<TableBody 
+				displayRowCheckbox={false}
+			>
 				{
-					this.state.mensajes.map((dato)=>{
+					this.props.messages.map((message)=>{
 					 return (
-						<TableRow key={dato.id}>
-							<TableRowColumn>{dato.nombre}</TableRowColumn>
-							<TableRowColumn>{dato.correo}</TableRowColumn>
-							<TableRowColumn>{dato.mensaje}</TableRowColumn>
+						<TableRow key={message.id}>
+							<TableRowColumn>{message.name}</TableRowColumn>
+							<TableRowColumn>{message.email}</TableRowColumn>
+							<TableRowColumn>{message.message}</TableRowColumn>
 							<TableRowColumn>
 							<RaisedButton 
 								label="Delete"  
 								primary={true}
-								onClick={()=>{this.removeData(dato.id)}} /></TableRowColumn>
+								onClick={()=>{this.removeData(message.id)}} /></TableRowColumn>
 						</TableRow>
 						)
 					})
@@ -161,4 +154,19 @@ class Messages extends React.Component {
 	}
 }
 
-export default Messages;
+const mapStateToProps = (state) => {
+    return {
+        messages: state.messages,
+        message: state.message,
+        messageId: state.messageId
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadData:()=>dispatch(loadMessages()),
+        deleteData:(messageId)=>dispatch(deleteMessage(messageId)),
+        sendData:(message)=>dispatch(createMessage(message))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Messages);
